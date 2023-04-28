@@ -1,9 +1,14 @@
 import subprocess
 
 def run_script(name):
-    process = subprocess.Popen(['bash', name], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    stdout, stderr = process.communicate()
-    return stdout.decode('utf-8'), stderr.decode('utf-8')
+    try:
+        subprocess.run([name], check=True)
+        print("The Bash script executed successfully.")
+    except subprocess.CalledProcessError as e:
+        print(f"The Bash script encountered an error (return code: {e.returncode}).")
+ #   process = subprocess.Popen(['bash', name], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+  #  stdout, stderr = process.communicate()
+   # return stdout.decode('utf-8'), stderr.decode('utf-8')
 
 def main():
 
@@ -87,5 +92,8 @@ def main():
                     print("Error:")
                     print(stderr)
             else:
-                print("Invalid input. Please try again.\n")
+                print("Invalid input.\n")
+
+if __name__ == '__main__':
+    main()
 
